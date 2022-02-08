@@ -1,8 +1,12 @@
-([Français](#gabarit-pour-dépôts-de-code-source-ouvert-du-gouvernement-du-canada))
+([Français](#Platforme-Authenti-Canada-Documentation))
 
-## Sign In Canada Platform
+## Sign In Canada Platform - Documentation
 
 The Sign In Canada platform provides an umbrella service that acts as a trusted intermediary between providers of credential services, and government programs who consume them to provide services to their external clients (e.g., individuals, businesses and representatives).
+
+This repository hosts the public documentation for Sign In Canada.
+
+Configuration artifacts and source code are managed separately in the [Acceptance-Platform](https://github.com/sign-in-canada/Acceptance-Platform) repository.
 
 ### How to Contribute
 
@@ -16,9 +20,13 @@ The Canada wordmark and related graphics associated with this distribution are p
 
 ______________________
 
-## Platforme Authenti-Canada
+## Platforme Authenti-Canada - Documentation
 
 La plateforme Authenti-Canada fournit un service parapluie qui agit comme un intermédiaire de confiance entre les fournisseurs de services d'identification et les programmes gouvernementaux qui les utilisent pour fournir des services à leurs clients externes (par exemple, des particuliers, des entreprises et des représentants).
+
+Ce référentiel héberge la documentation publique de Authenti-Canada.
+
+Les artefacts de configuration et le code source sont gérés dans le référentiel [Acceptance-Platform](https://github.com/sign-in-canada/Acceptance-Platform).
 
 ### Comment contribuer
 
