@@ -6,53 +6,81 @@ lang: en
 ---
 # Pairwise Identifier Auto-Collection
 
-One of the primary goals of the Sign In Canada Acceptance platform is to
+One of the primary goals of the Sign In Canada Sign In Canada Platform is to
 facilitate the replacement of old credential service provider systems, in
 particular, the outsourced legacy GCKey and Credential Broker Service systems
 that have been in use since 2011.
 
 One of the key prerequisites for decommissioning or replacing these old systems
 is to move the pairwise identifier mappings currently held by these older
-services to the Acceptance Platform, so that users' enrolments with relying
-parties are not impacted when relying parties move to the Sign In Canada
-platform. 
+services to the Sign In Canada Platform, so that users' enrolments with relying
+parties are not impacted when relying parties move to Sign In Canada.
 
-The Sign In Canada Acceptance Platform implements a feature that is able to
+The Sign In Canada Sign In Canada Platform implements a feature that is able to
 automatically copy a user's pairwise identified mappings from a legacy
-credential service to the Acceptance Platform the first time they are used.
-These are then stored by the Acceptance Platform for future use, so that the
+credential service to the Sign In Canada Platform the first time they are used.
+These are then stored by the Sign In Canada Platform for future use, so that the
 mapping stored by the credential service is no longer required. This reduces the
 risk and effort required to move this data. Over time the mapping data of active
-users is gradually "collected" by the Acceptance Platform, reducing the need to
+users is gradually "collected" by the Sign In Canada Platform, reducing the need to
 regularly copy the data manually via some kind of "bulk transfer".
 
 ## How it works
 
-The Acceptance Platform accomplishes the automatic collection of pairwise
+```plantuml!
+skinparam sequenceMessageAlign direction
+skinparam responseMessageBelowArrow true
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+title Audo-collection of a pairwise identifier
+Participant "Relying Party" as RP
+Participant "Sign In Canada" as SIC
+Participant "SAML IDP (GCCF CSP)" as IDP
+RP -> SIC : authentication request
+SIC -> IDP : SAML authentication request
+SIC <-- IDP : SAML response with assertion
+SIC -> SIC : Lookup user
+alt requested pairwise identifier not found
+   SIC -> IDP : SAML authentication request
+   note right : for the requested identifier
+   SIC <-- IDP : authentication response
+   alt response contains a SAML assertion
+      SIC -> SIC : store collected pairwise identifier
+   else response does not contain a SAML assertion
+      SIC -> SIC : create new pairwise identifier
+   end
+end
+RP <-- SIC : authentication response
+note right : with pairwise identifier
+```
+
+The Sign In Canada Platform accomplishes the automatic collection of pairwise
 identifier mappings as part of the normal user login process, by sending a second
 SAML authentication request to the legacy credential service providers when
 required.
 
 1. The process begins when a relying party sends an authentication request to
-   the Acceptance Platform, using either OpenID Connect or SAML.
-2. The Acceptance Platform then sends an authentication request to the CSP on
+   the Sign In Canada Platform, using either OpenID Connect or SAML.
+2. The Sign In Canada Platform then sends an authentication request to the CSP on
    its own behalf. Requesting the pairwise identifier that the CSP has created
    for Sign In Canada.
-3. Upon receiving the SAML Assertion from the CSP, the Acceptance Platform looks
+3. Upon receiving the SAML Assertion from the CSP, the Sign In Canada Platform looks
    the user up in its own user profile repository.
-4. The Acceptance Platform then checks to see if it already has a pairwise
+4. The Sign In Canada Platform then checks to see if it already has a pairwise
    identifier mapping for the authenticated user with the requesting relying
    party. If so, then collection is not required, the login flow completes
-   normally, and the Acceptance platform returns the appropriate pairwise
+   normally, and the Sign In Canada Platform returns the appropriate pairwise
    identifier to the relying party (RP).
-5. If however, the Acceptance Platform does not have a pairwise identifier
+5. If however, the Sign In Canada Platform does not have a pairwise identifier
    mapping for the authenticated user with the requesting relying party, then it
    sends a second authentication request to the CSP on the relying party's
    behalf.
 6. If the CSP has an existing pairwise identifier for the user with the
    requesting RP, it returns that identifier in an Assertion and the Acceptance
    platform adds it to its own user repository. At this point, the identifier
-   has been "collected" by the Acceptance platform, and will be used whenever
+   has been "collected" by the Sign In Canada Platform, and will be used whenever
    the user logs into that RP in the future (as per step 4 above).
 7. If the CSP does not have an existing pairwise identifier for the user with
    the requesting RP then there is nothing to "collect", so the Acceptance
@@ -62,7 +90,7 @@ required.
 ## Technical Details
 
 When sending a second authentication request to the CSP on behalf or the relying
-party, the Acceptance Platform makes use of the `<NameIDPolicy>` element of the
+party, the Sign In Canada Platform makes use of the `<NameIDPolicy>` element of the
 SAML `<AuthnRequest>` message. Specifically, it uses the following two
 attributes of the `<NameIDPolicy>` element:
 
@@ -132,7 +160,7 @@ that the user will not have to authenticate more than once, if at all:
   but the single sign-on (SSO) window (20 minutes with the GCCF CSPs) has
   expired, they will be prompted to authenticate after the first SAML
   authentication request. After they successfully log in to the CSP, the the
-  Acceptance Platform then sends the second authentication request a fraction of
+  Sign In Canada Platform then sends the second authentication request a fraction of
   a second later, well within the SSO window, so they will not be prompted to
   login a second time.
 * In the unlikely case where the user is already logged in to the CSP, but the
@@ -144,10 +172,10 @@ that the user will not have to authenticate more than once, if at all:
   re-enter their credentials at all. The relying party can override this
   behaviour by specifying `prompt="login"` (for OpenID Connect) or
   `forceAuthn="true"` (in SAML) in their authentication request to Sign In
-  Canada, in which case the Acceptance Platform will specify
+  Canada, in which case the Sign In Canada Platform will specify
   `forceAuthn="true"` on it's first request to the CSP, but not the second.
 
-### What if the user at the keyboard changes? Is there a risk that the Acceptance Platform could collect the wrong identifier belonging to the wrong person?
+### What if the user at the keyboard changes? Is there a risk that the Sign In Canada Platform could collect the wrong identifier belonging to the wrong person?
 
 This possible scenario can arise in cases where multiple people are sharing the
 same device, and one of them has left the device unattended while they were
@@ -160,19 +188,23 @@ Consider two users, Alice and Bob, who both have access to the same shared compu
 * Bob then sits down at the same computer and attempts to log in to a Sign In
   Canada relying party, just a few seconds before Alice's 20 minute single-sign
   on window expires.
-* The Acceptance platform sends the first authentication request to GCKey, and
+* The Sign In Canada Platform sends the first authentication request to GCKey, and
   receives Alice's pairwise identifier in return.
 * Alice's SSO window then expires in the fraction of a second before the
-  Acceptance Platform sends the second authentication request. GCKey prompts Bob
+  Sign In Canada Platform sends the second authentication request. GCKey prompts Bob
   to enter his GCKey credentials and then returns Bob's pairwise identifier to
-  the Acceptance Platform.
-* The Acceptance platform then associates Bob's GCKey identifier with Alice's
+  the Sign In Canada Platform.
+* The Sign In Canada Platform then associates Bob's GCKey identifier with Alice's
   user profile.
 
-In order to safeguard against this, the Acceptance Platform checks the
+In order to safeguard against this, the Sign In Canada Platform checks the
 `SessionIndex` of both SAML Assertions, and makes sure that they match before
 accepting the collected identifier.
 
 ### SAML Pairwise identifiers issued by an identity provider (IDP) are supposed to be specific to a SAML service provider (SP). How is Sign In Canada allowed to obtain the identifiers generated for another SAML SP?
 
-The SAML specifications allow for the existence of *Affiliations*: groups of one or more SPs that share the same pairwise identifier for a given user. When a relying party moves from the GCCF to Sign In Canada, a new SAML Affiliation is defined, via SAML metadata, that allows the Acceptance Platform to obtain the pairwise identifiers that were originally created for the RP.
+The SAML specifications allow for the existence of *Affiliations*: groups of one
+or more SPs that share the same pairwise identifier for a given user. When a
+relying party moves from the GCCF to Sign In Canada, a new SAML Affiliation is
+defined, via SAML metadata, that allows the Sign In Canada Platform to obtain
+the pairwise identifiers that were originally created for the RP.
