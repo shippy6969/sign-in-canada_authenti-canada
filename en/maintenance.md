@@ -6,7 +6,7 @@ lang: en
 ---
 # Upcoming Planned Maintenance
 
-## Tuesday February 2, 2022 7:00PM to 7:10 PM EST
+## Saturday February 12, 2022 9:00PM to 9:15 PM EST
 
 ### Environments Affected:
 
@@ -20,4 +20,4 @@ corrective maintenance on the network security infrastructure used by Sign In
 Canada. During this time both the Client Acceptance Test and Production
 environments will not be accessible.
 
-The outage is expected to last approximately 10 minutes.
+The outage is expected to last approximately 10-15 minutes.

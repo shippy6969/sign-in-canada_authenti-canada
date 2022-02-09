@@ -6,7 +6,7 @@ lang: fr
 ---
 # Maintenance planifiée à venir
 
-## Mardi 2 février 2022 19 h 00 à 19 h 10 HNE
+## Samedi 12 février 2022 21 h 00 à 21 h 15 HNE
 
 ### Environnements concernés :
 
@@ -20,4 +20,4 @@ maintenance corrective sur l'infrastructure de sécurité réseau utilisée par 
 Canada. Pendant ce temps, le test d'acceptation client et la production
 les environnements ne seront pas accessibles.
 
-La panne devrait durer environ 10 minutes.
+La panne devrait durer environ 10-15 minutes.
