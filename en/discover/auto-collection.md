@@ -6,10 +6,10 @@ lang: en
 ---
 # Pairwise Identifier Auto-Collection
 
-One of the primary goals of the Sign In Canada Sign In Canada Platform is to
-facilitate the replacement of old credential service provider systems, in
-particular, the outsourced legacy GCKey and Credential Broker Service systems
-that have been in use since 2011.
+One of the primary goals of the Sign In Canada Platform is to facilitate the
+replacement of old credential service provider systems, in particular, the
+outsourced legacy GCKey and Credential Broker Service systems that have been in
+use since 2011.
 
 One of the key prerequisites for decommissioning or replacing these old systems
 is to move the pairwise identifier mappings currently held by these older
@@ -17,7 +17,7 @@ services to the Sign In Canada Platform, so that users' enrolments with relying
 parties are not impacted when relying parties move to Sign In Canada.
 
 The Sign In Canada Sign In Canada Platform implements a feature that is able to
-automatically copy a user's pairwise identified mappings from a legacy
+automatically copy a user's pairwise identifier mappings from a legacy
 credential service to the Sign In Canada Platform the first time they are used.
 These are then stored by the Sign In Canada Platform for future use, so that the
 mapping stored by the credential service is no longer required. This reduces the
@@ -34,7 +34,7 @@ skinparam titleBorderRoundCorner 15
 skinparam titleBorderThickness 2
 skinparam titleBorderColor red
 skinparam titleBackgroundColor Aqua-CadetBlue
-title Audo-collection of a pairwise identifier
+title Auto-collection of a pairwise identifier
 Participant "Relying Party" as RP
 Participant "Sign In Canada" as SIC
 Participant "SAML IDP (GCCF CSP)" as IDP
