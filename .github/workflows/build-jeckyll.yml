@@ -23,7 +23,7 @@ jobs:
       - name: Start PlantUML
         run: |
           wget "https://github.com/plantuml/plantuml/releases/download/v1.2022.1/plantuml-1.2022.1.jar"
-          java -jar ./plantuml-1.2022.1.jar &
+          java -jar ./plantuml-1.2022.1.jar -picoweb &
 
       # Use GitHub Deploy Action to build and deploy to Github
       - uses: jeffreytse/jekyll-deploy-action@v0.3.1
