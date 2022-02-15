@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      plantUML:
+      plantuml:
         image: plantuml/plantuml-server:jetty
         ports:
           - 8080:8080
