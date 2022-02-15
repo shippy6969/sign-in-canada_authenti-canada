@@ -8,6 +8,13 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+
+    services:
+      plantUML:
+        image: plantuml/plantuml-server:jetty
+        ports:
+          - 8080:8080
+
     steps:
       - uses: actions/checkout@v2
 
@@ -19,14 +26,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      # Download and start the PlantUML pico server
-      - name: Start PlantUML
-        run: |
-          wget "https://github.com/plantuml/plantuml/releases/download/v1.2022.1/plantuml-1.2022.1.jar"
-          java -jar ./plantuml-1.2022.1.jar -picoweb &
-
       # Use GitHub Deploy Action to build and deploy to Github
-      - uses: ./.github/actions/jekyll-deploy-action
+      - uses: jeffreytse/jekyll-deploy-action@v0.3.1
         with:
           provider: 'github'
           token: ${{ secrets.GITHUB_TOKEN }} # It's your Personal Access Token(PAT)
