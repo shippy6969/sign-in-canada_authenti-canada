@@ -1,200 +1,354 @@
 ---
 layout: default
 ref: discover-session
-title: Session Management
+title: Gestion des séances
 lang: fr
 ---
-# Session Management
+# Gestion des séances
 
-The Sign in Canada Acceptance Platform functions as a session management
-authority that centrally coordinates users’ sessions across multiple RP
-applications. There are two key features of the platform that support this:
-single sign-on, and single logout.
+La plateforme Authenti-Canada fonctionne comme une autorité de gestion de
+session qui coordonne de façon centralisée les sessions des utilisateurs dans
+plusieurs applications de parties de confiance (PC). La plateforme comporte deux
+caractéristiques clés qui la soutiennent : authentification unique et
+déconnexion unique.
 
-## Single Sign-On
+## Authentification unique
 
-Once a user has successfully used a given credential or trusted digital identity
-service to authenticate to one RP, the Acceptance Platform can allow them to
-silently authenticate to other RPs subject to a 20 minute timeout period. The
-Acceptance Platform accomplishes this by creating its own session with the user
-when they first sign in to one RP, and then simply not prompting them when they
-sign in to other RPs within the timeout window.
+Une fois qu’un utilisateur a utilisé avec succès un justificatif quelconque ou
+un service d’identité numérique de confiance pour s’authentifier auprès d’une
+PC, Authenti-Canada peut lui permettre de s’authentifier en silence auprès
+d’autres PC, sous réserve d’une période d’attente d’authentification unique. La
+plateforme y parvient en créant sa propre session avec l’utilisateur lors de sa
+première connexion, puis en ne les invitant pas à se réauthentifier lorsqu’ils
+se connectent à d’autres PC pendant un délai d’inactivité spécifiée.
 
-Relying parties who wish to force their users to authenticate every time can
-still do so, using a parameter in their authentication requests.
+La fenêtre d’attente de l’authentification unique démarre chaque fois qu’un
+utilisateur saisit son mot de passe correct à un fournisseur de justificatif
+d’identité (FJI) et se termine après une période spécifiée. Par défaut, il
+s’agit de 20 minutes, mais les parties qui se connectent au Canada peuvent
+modifier ce délai si elles le souhaitent. Il est toutefois important de noter
+que la fenêtre d’authentification unique des services d’authentifiant CléGC et
+le service de courtier de justificatifs d’identité, qui est également de 20
+minutes, ne peut pas être modifié, elle ne peut être désactivée (appelée
+authentification forcée). Dans toute situation où le délai d’attente « codé en
+dur » pourrait entrer en conflit avec le délai d’attente préféré d’une partie de
+confiance, la plateforme Authenti-Canada synchronisera automatiquement les deux
+et résoudra le conflit.
 
-_Note that in order for single sign-on to work, a user must use the same
-credential or trusted digital identity to access all digital government
-services. At present, this not possible since not all Government of Canada
-services accept the same credentials. For example, accessing online tax services
-provided by CRA is currently not possible using a CKey credential, therefore
-users who chose to use a GCKey credential cannot single sign-on to CRA's "My
-Account for Individuals"._
+_Notez que pour que l’authentification unique fonctionne, l’utilisateur doit
+utiliser les mêmes informations d’identification ou la même identité numérique
+de confiance pour accéder à tous les services gouvernementaux numériques. À
+l’heure actuelle, cela n’est pas possible puisque tous les services du
+gouvernement du Canada n’acceptent pas les mêmes justificatifs. Par exemple,
+l’accès aux services fiscaux en ligne fournis par l’Agenge du revenu du Canada
+n’est actuellement pas possible à l’aide d’un justificatif d’identité de CléGC.
+Par conséquent, les utilisateurs qui ont choisi d’utiliser un justificatif de
+CléGC ne peuvent pas s’inscrire à [Mon dossier pour les particuliers de
+l’ARC](https://www.canada.ca/fr/agence-revenu/services/services-electroniques/services-electroniques-particuliers/dossier-particuliers.html)._
 
-## Single Logout
+## Déconnexion unique
 
-When a user has used Sign in Canada to obtain multiple services provided by
-multiple web sites (RP applications), the Acceptance Platform has the ability to
-centrally coordinate single logout. With single logout, the user only has to
-click one logout button on the site they are currently visiting, and the
-Acceptance platform will then log them out of all the other sites they have
-visited during their session.
+Lorsqu’un utilisateur a visité plusieurs sites Web (applications de partie de
+confiance) au cours de la même session, la plateforme Authenti-Canada a la
+capacité de coordonner de manière centralisée une déconnexion unique. Avec une
+déconnexion unique, l’utilisateur n’a qu’à cliquer sur un bouton de déconnexion
+sur le site qu’il visite actuellement, et Authenti-Canada les déconnectera
+ensuite de tous les autres sites qu’il a visités pendant sa session.
 
-The propagation of logout across all of these sites can use the [OpenID Connect
-Front-Channel
-Logout](https://openid.net/specs/openid-connect-frontchannel-1_0.html)
-mechanism, the [OpenID Connect Back-Channel
-Logout](https://openid.net/specs/openid-connect-backchannel-1_0.html) mechanism,
-or the [SAML Single Logout
-Profile](https://www.oasis-open.org/committees/download.php/56782/sstc-saml-profiles-errata-2.0-wd-07.html)
-using front-channel (HTTP-Redirect) and/or back-channel (SOAP) [bindings](https://www.oasis-open.org/committees/download.php/56779/sstc-saml-bindings-errata-2.0-wd-06.pdf).
-The Sign In Canada Acceptance Platform supports all of these.
+La propagation de la déconnexion sur tous ces sites peut utiliser le mécanisme
+de déconnexion [OpenID Connect
+Front-Channel](https://openid.net/specs/openid-connect-frontchannel-1_0.html),
+le mécanisme de déconnexion [OpenID Connect
+Back-Channel](https://openid.net/specs/openid-connect-backchannel-1_0.html) ou
+le profil de déconnexion SAML à l’aide de
+[liaisons](https://www.oasis-open.org/committees/download.php/56779/sstc-saml-bindings-errata-2.0-wd-06.pdf)
+de canal frontal (HTTP-Redirect) ou de canal secondaire (SOAP). La plateforme
+Authenti-Canada appuie tous ces éléments.
 
-Both the OpenID Connect and SAML protocols follow the same basic sequence of events:
+Les protocoles OpenID Connect (OIDC) et SAML suivent la même séquence d’événements de base :
 
-1. As a user leverages Sign in Canada to visit multiple web sites (applications)
-   within the same session, the Acceptance Platform keeps track of which sites
-   they have visited.
-2. When the user clicks a logout button on one of the the sites they are
-   visiting, that site's web application sends a logout request to the
-   Acceptance Platform.
-3. The Acceptance Platform then sends a logout request to all of the other sites
-   the user has visited, so they can log the user out.
+1. Comme un utilisateur visite plusieurs sites Web (applications) au cours de la
+   même session, la plateforme Authenti-Canada permet de suivre les sites qu’il
+   a visités.
+2. Lorsque l’utilisateur clique sur un bouton de déconnexion sur l’un des sites
+   qu’il visite, l’application Web de ce site envoie une demande de déconnexion
+   à la plateforme Authenti-Canada.
+3. Authenti-Canada envoie ensuite une demande de déconnexion à tous les autres
+   sites que l’utilisateur a visités, afin qu’il puisse déconnecter
+   l’utilisateur.
 
-For those sites that support the SAML profile, each site that receives a SAML
-logout request from the Acceptance Platform returns a SAML response to indicate
-whether the user was successfully logged out. For those sites that use OpenID
-Connect Front-Channel Logout, there is no similar response returned.
+## Transition et coexistence
 
-## Transition and Coexistence
+Il y aura une période de transition prolongée à mesure que les applications PC
+se connecteront à Authenti-Canada et se déconnecteront progressivement un à un
+de la fédération des justificatifs du gouvernement du Canada (FJGC) CléGC et
+Services de courtier de justificatifs d’identité. Pendant cette période de
+transition, la plateforme Authenti-Canada servira d’autorité de gestion de
+session pour les applications qui y sont connectées, tandis que les services
+CléGC et services de courtier de justificatifs d’identité serviront d’autorité
+de gestion de session pour les applications qui y sont connectées.
 
-There will be an extended transition period as RP applications connect to the
-Acceptance Platform and disconnect from the legacy GCKey and Credential Broker
-services one at a time. During this transition period, the Acceptance Platform
-will serve as the session management authority for applications connected to it,
-while the GCKey and Credential Broker services serve as the session management
-authority for applications connected to them.
+Cela crée une obligation pour Authenti-Canada de coordonner une déconnexion
+unique avec CléGC et les services de courtier de justificatifs d’identité
+(SCJI), ainsi qu’avec ses propres PC. La plateforme y parvient en appuyant le
+profil de déconnexion unique SAML dans le cadre de son intégration, en tant que
+fournisseur de justificatifs d’identité proxy SAML, avec CléGC et services de
+courtier de justificatif d’identité. La plateforme Authenti-Canada est en mesure
+de coordonner une déconnexion unique avec la fédération des justificatifs du
+gouvernement du Canada (FJGC) dans les deux sens. C’est-à-dire, peu importe si
+l’utilisateur se déconnecte d’abord d’Authenti-Canada ou s’il se déconnecte
+d’abord de la FJGC.
 
-This creates a requirement for the Acceptance Platform to coordinate single
-logout with GCKey and CBS, as well as with its own RPs. The Acceptance Platform
-accomplishes this by supporting the SAML Single Logout profile as part of its
-integration, as a relying party, with GCKey and CBS.
+### Scénario 1 : Un utilisateur se déconnecte d’abord d’Authenti-Canada
 
-The following example scenario illustrates how single logout is achieved in the
-case where the user clicks a logout button on a relying party site that is connected to the
-Acceptance Platform.
+L’exemple suivant illustre comment une déconnexion unique est réalisée dans le
+cas où l’utilisateur clique sur un bouton de déconnexion sur un site de la
+partie de confiance qui est connecté à Authenti-Canada.
 
-![SP-Initiated-Logout](images/SP-initiated-logout.svg)
+```plantuml!
+skinparam sequenceMessageAlign direction
+skinparam responseMessageBelowArrow true
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+title Déconnexion initiée par une partie utilisatrice de Authenti-Canada
+Actor Navigateur as Browser
+Participant "Partie de confiance" as RP
+box "Authenti-Canada"
+Participant "Fournisseur OpenID" as OP
+Participant "Cadre d'acceptation" as Passport
+end box
+Participant "SAML Fournisseur\nd'identité SAML (FJI)" as IDP
+Participant "Autre(s) PR\nd'Authenti-Canada" as Other_SIC
+Participant "Autre(s) PR\ndu FJGC" as Other_GCCF
+Browser -> RP : Se déconnecter
+RP -> RP : local Se déconnecter
+RP --> Browser : Redirection vers le point de terminaison end_session
+Browser -> OP : Demande de déconnexion OIDC au point de terminaison end_session
+group Par
+   OP ->> Other_SIC : Demande(s) de déconnexion du canal de retour OIDC
+   Other_SIC -> Other_SIC : local Se déconnecter
+   OP <<-- Other_SIC : réponses de déconnexion
+end
+Browser <-- OP : Page de propagation de déconnexion avec iframes
+group Par
+   Browser ->> Other_SIC : Demande(s) de déconnexion du canal frontal OIDC
+   Other_SIC -> Other_SIC : local Se déconnecter
+   Browser <<-- Other_SIC : Réponse(s) HTTP
+   Browser ->> Passport : Demande de déconnexion
+   Browser <<-- Passport : Demande de déconnexion SAML
+   Browser ->> IDP : Demande de déconnexion SAMLt
+   loop
+      IDP -> Other_GCCF : Demande de déconnexion SAML
+      Other_GCCF -> Other_GCCF : local Se déconnecter
+      Other_GCCF --> IDP : Réponse de déconnexion SAML
+   end
+   note right of IDP : Déconnexion du FJGC terminée
+   Browser <<-- IDP : Réponse de déconnexion SAML
+end
+alt une erreur s'est produite
+   Browser -> OP : Charger la page d'avertissement de déconnexion
+   Browser <-- RP : Page d'avertissement de déconnexion
+else aucune erreur n'est survenue
+   Browser -> RP : Charger la page de déconnexion terminée
+   Browser <-- RP : Page de déconnexion terminée
+end
+note right of Browser
+   Authenti-Canada
+   déconnexion terminée
+end note
+```
 
-The scenario begins when a user clicks a logout button on the relying party site
-they have been using. When this happens:
+Le scénario commence lorsqu’un utilisateur clique sur un bouton de déconnexion
+sur le site de la partie de confiance qu’il utilise. Lorsque cela se produit :
 
-1. The relying party application logs the user out locally first, then it
-   redirects the browser to either the Acceptance Platforms's OpenID Connect end_session endpoint, or to its SAML Single Logout service.
-2. If any relying parties participating in the session support back-channel
-   logout, the Acceptance Platform first sends a logout token to all of them, via an HTTP POST to their registered back-channel logout URI(s) to trigger the logout actions by those RPs. If there are multiple relying parties then these requests are all sent simultaneously, in parallel.
-3. Once back-channel logout has been completed, The Acceptance Platform then returns an
-   [HTML](https://html.spec.whatwg.org/multipage/) logout propagation page to the browser. This
-   page contains a number of
-   [iframe](https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element)
-   elements. The `src` (source) attribute of all but one of the `iframe`
-   elements points to the front-channel logout [URI](https://openid.net/specs/openid-connect-frontchannel-1_0.html#RPLogout) of another
-   relying party site where the user has logged in during their current session.
-   In the diagram, these other sites are identified as "Other OIDC RPs". The
-   `src` attribute of the final `iframe` points to a URI endpoint of the
-   Acceptance Platform's Acceptance Framework.
-4. Upon receiving the propagation page, the browser begins to load all of the of
-   the `iframe`s in parallel, by asynchronously sending an HTTP GET request to
-   the `src` URI of each `iframe`.
-5. As the other relying parties receive these requests, they log the user out
-   locally, and then return an HTTP response to the browser.
-6. When the Acceptance Platform's Acceptance Framework receives its request, it
-   creates a SAML `LogoutRequest` message and then redirects the browser with
-   that message (within the `iframe`) to the legacy CSP (GCKey or CBS) that the
-   user chose to log in with.
-7. The CSP then logs the user out of their credential. If the user has visited
-   any sites that are still connected directly to the CSP (instead of to Sign in
-   Canada) it will also propagate the logout to all of those sites.
-8. The CSP then redirects the browser (within the `iframe`) back to the
-   Acceptance Platform's Acceptance Framework with a SAML
-   `LogoutResponse` message. The Acceptance Framework processes this
-   message and then sends an HTTP response back to the browser.
-9. While all of the `iframe`s are propagating the logout to various sites
-   asynchronously, their progress is monitored by JavaScript code running in the
-   browser. Once all of the `iframes` have completely loaded, this JavaScript
-   code checks the success or failure status of each.
-10. If any of the `iframes` fail or time-out, the JavaScript code will redirect
-   the browser to an error page, warning the user that they may not be
-   completely signed out and recommending that they close their browser.
-11. If all of the `iframes` successfully propagate logout to their target site,
-    then the browser is redirected to the logout landing page of the site where
-    the user initially clicked "Logout".
+1. L’application de la partie de confiance déconnecte l’utilisateur localement
+   d’abord, puis redirige le navigateur vers le point de terminaison OpenID
+   Connect de session des plateformes d’acceptation.
+2. Si des parties de confiance qui participent à la session appuient la
+   déconnexion en mode canal arrière de Connexion OpenID, la plateforme
+   d’acceptation envoie d’abord un jeton de déconnexion à tous, à travers un
+   POST HTTP à leurs URI de déconnexion en mode canal arrière enregistré pour
+   déclencher les actions de déconnexion de ces PC. S’il y a plusieurs parties
+   de confiance, ces demandes sont toutes envoyées simultanément, en parallèle.
+3. Une fois la déconnexion canal arrière terminée, la plateforme d’acceptation
+   retourne une page de propagation de déconnexion
+   [HTML](https://html.spec.whatwg.org/multipage/) au navigateur. Cette page
+   contient un certain nombre d’éléments
+   [iframe](https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element).
+   L’attribut src (source) de tous les éléments, sauf un, pointe vers l’URI de
+   déconnexion du canal avant de l’un des sites de partie de confiance
+   d’Authenti-Canada où l’utilisateur s’est connecté pendant sa session en
+   cours. Dans le diagramme, ces autres sites sont désignés comme « autres PC de
+   l’OIDC ». L’attribut `src` de l’_iframe_ final pointe vers un point terminal URI
+   du Cadre d’acceptation de la plateforme d’acceptation.
+4. Dès réception de la page de propagation, le navigateur commence à charger en
+   parallèle l’intégralité de la valeur des __iframe_s, en envoyant de manière
+   asynchrone une requête HTTP GET à l’URI `src` de chaque _iframe_.
+5. Lorsque les autres parties de confiance reçoivent ces demandes, elles
+   déconnectent l’utilisateur localement, puis retournent une réponse HTTP au
+   navigateur.
+6. Lorsque le cadre d’acceptation de la plateforme d’acceptation reçoit sa
+   demande, il crée un message SAML de demande de déconnexion, puis redirige le
+   navigateur avec ce message (dans le cadre _iframe_) vers l’ancien PSC (CléGC ou
+   FJI) avec lequel l’utilisateur a choisi de se connecter.
+7. Le FSI déconnecte ensuite l’utilisateur de ses informations d’identification.
+   Si l’utilisateur a visité des sites qui sont encore reliés directement au FSI
+   (au lieu d’Authenti-Canada), il propagera également la déconnexion à tous ces
+   sites, progressivement, une à une.
+8. Le FSI redirige ensuite le navigateur (dans l’_iframe_) vers le Cadre
+   d’acceptation de la plateforme d’acceptation avec un message SAML
+   `LogoutResponse`. Le Cadre d’acceptation traite ce message, puis envoie une
+   réponse HTTP au navigateur.
+9. La page de propagation de déconnexion comporte un gestionnaire d’événements
+   d’erreur global qui sera déclenché si un type d’erreur se produit alors que
+   tous les _iframes_ propagent la déconnexion vers divers sites de manière
+   asynchrone.
+10. Si l’une des _iframes_ échoue ou s’interrompt, si la réponse de déconnexion
+    SAML du FSI indique une erreur, alors le gestionnaire onerrorevent redirige
+    le navigateur vers une page d’erreur, avertissant l’utilisateur qu’il ne
+    peut pas être complètement déconnecté et lui recommandant de fermer son
+    navigateur.
+11. Si toutes les _iframes_ propagent avec succès la déconnexion vers leur site
+    cible, le navigateur est redirigé vers la page d’accueil de déconnexion du
+    site où l’utilisateur a initialement cliqué sur « Déconnexion » (l’URI
+    post_déconnexion_redirect_uri de la partie de confiance).
 
-The next example scenario illustrates how single logout is achieved in the case
-where the user clicks a logout button on a relying party site that is still
-connected one of the GCCF credential services (GCKey or CBS).
+### Scénario 2 : Un utilisateur se déconnecte d’abord du FJGC
 
-![CSP-Initiated-Logout](images/CSP-initiated-logout.svg)
+L’exemple suivant illustre comment une déconnexion unique est réalisée dans le
+cas où l’utilisateur clique sur un bouton de déconnexion sur un site de la
+partie de confiance qui est toujours connecté à l’un des services de
+justificatif d’identification de la FJGC (CléGC ou service de courtier de
+justificatif d’identité).
 
-The scenario begins when a user clicks a logout button on the relying party site
-they have been using. When this happens:
+```plantuml!
+skinparam sequenceMessageAlign direction
+skinparam responseMessageBelowArrow true
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 2
+skinparam titleBorderColor red
+skinparam titleBackgroundColor Aqua-CadetBlue
+title Déconnexion initiée par une partie de confiance FJGC
+Actor Navigateur as Browser
+Participant "Partie de confiance SAML" as RP
+Participant "SAML Fournisseur\nd'identité SAML (FJI)" as IDP
+Participant "Autre(s) PR\ndu FJGC" as Other_GCCF
+box "Authenti-Canada"
+Participant "Cadre d'acceptation" as Passport
+Participant "Fournisseur OpenID" as OP
+end box
+Participant "Autre(s) PR\nd'Authenti-Canada" as Other_SIC
+Browser -> RP : Se déconnecter
+RP -> RP : local Se déconnecter
+Browser <-- RP : Redirection HTTP\navec demande de déconnexion SAML
+Browser -> IDP : Demande de déconnexion SAML
+loop
+   IDP -> Other_GCCF : Demande de déconnexion SAML
+   Other_GCCF -> Other_GCCF : local Se déconnecter
+   Other_GCCF --> IDP : SAML Réponse de déconnexion
+end
+note right of IDP : Déconnexion FJGC terminée
+Browser <-- IDP  : Redirection HTTP vers Authenti-Canada
+Browser -> Passport : Demande de déconnexion SAML
+Browser <-- Passport : Redirection HTTP vers le point de terminaison end_session
+Browser -> OP : Demande de déconnexion OIDC au point de terminaison end_session
+group Par
+   OP ->> Other_SIC : demande(s) de déconnexion
+   Other_SIC -> Other_SIC : local Se déconnecter
+   OP <<-- Other_SIC : réponse(s) de déconnexion
+end
+Browser <-- OP : Page de propagation de déconnexion avec iframes
+group Par
+   Browser ->> Other_SIC : Demande(s) de déconnexion du canal frontal OIDC
+   Other_SIC -> Other_SIC : local Se déconnecter
+   Browser <<-- Other_SIC : Réponse(s) HTTP
+end
+Browser -> Passport : Résultat de déconnexion (Succès / Échec)
+Browser <-- Passport : Réponse de déconnexion SAML
+note right of Browser
+   Authenti-Canada
+   Déconnexion terminée
+end note
+Browser -> IDP : Réponse de déconnexion SAML
+alt échec de déconnexion
+   Browser <-- IDP : Réponse de déconnexion SAML avec code "Déconnexion partielle"
+   Browser -> RP : Réponse de déconnexion SAML
+   Browser <-- RP : Page d'avertissement de déconnexion
+else déconnexion réussie
+   Browser <-- IDP : Réponse de déconnexion SAML avec code "succès"
+   Browser -> RP : Réponse de déconnexion SAML
+   Browser <-- RP : Page de déconnexion terminée
+end
+```
 
-1. The relying party application logs the user out locally first, then it
-   redirects the browser to the CSP's SAML Single Logout endpoint with a SAML
-   `LogoutRequest` message.
-2. If the user has visited additional sites that are still connected directly to the
-   CSP (instead of to the Acceptance Platform) it will first propagate the logout to all
-   of those sites using SAML back-channel (SOAP) logout.
-3. The CSP then redirects the browser to the Acceptance Platform's Acceptance
-   Framework with a SAML `LogoutRequest` message.
-4. The Acceptance framework then redirects the browser to the Acceptance
-   Platform's OpenID Provider (OP)'s end_session endpoint.
-5. If any relying parties participating in the Acceptance Platform's session
-   support back-channel logout, the Acceptance Platform sends a logout token to
-   all of them first, via an HTTP POST to their registered back-channel logout
-   URI(s). This triggers the logout actions by each of those RPs. If there are
-   multiple relying parties then these requests are all sent simultaneously, in
-   parallel.
-6. Once back-channel logout has been completed, the Acceptance Platform returns an
-   [HTML](https://html.spec.whatwg.org/multipage/) logout propagation page. This
-   page contains a number of
-   [iframe](https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element)
-   elements. The `src` (source) attribute of each `iframe`
-   element points to the front-channel logout [URI](https://openid.net/specs/openid-connect-frontchannel-1_0.html#RPLogout) of one of the
-   relying party sites where the user has logged in during their current session.
-   In the diagram, these other sites are identified as "Other OIDC RPs". The
-   `src` attribute of the final `iframe` points to a URI endpoint of the
-   Acceptance Platform's Acceptance Framework.
-7. Upon receiving the propagation page, the browser begins to load all of the of
-   the `iframe`s in parallel, by asynchronously sending an HTTP GET request to
-   the `src` URI of each `iframe`.
-8. As the other relying parties receive these requests, they log the user out
-   locally, and then return an HTTP response to the browser.
-9. While all of the `iframe`s are propagating the logout to various sites
-   asynchronously, their progress is monitored by JavaScript code running in the
-   browser. Once all of the `iframes` have completely loaded, this JavaScript
-   code checks the success or failure status of each.
-10. If any of the `iframes` fail or time-out, the JavaScript code will redirect
-   the browser to the Acceptance Framework with an HTTP request that indicates a
-   logout problem.
-    1. The Acceptance Framework will then redirect the browser back
-   to the CSP with a SAML `LogoutResponse` message bearing a status code of
-   `urn:oasis:names:tc:SAML:2.0:status:Responder`.
-    2. The CSP will then in turn redirect the browser back to it's own RP with a
-      `LogoutResponse` message bearing a top level status code of
-      `urn:oasis:names:tc:SAML:2.0:status:Success` and a second-level status
-      code of `urn:oasis:names:tc:SAML:2.0:status:PartialLogout`.
-    3. This will cause the SAML RP to display error page, warning the user that
-       they may not be completely signed out and recommending that they close
-       their browser.
-11. If all of the `iframes` successfully propagate logout to their target site,
-    the JavaScript code will redirect the browser to the Acceptance Framework
-    with an HTTP request that indicates a successful logout.
-    1. The Acceptance Framework will then redirect the browser back to the CSP
-       with a SAML `LogoutResponse` message bearing a status code of
+Le scénario commence lorsqu’un utilisateur clique sur un bouton de déconnexion
+sur le site de la partie de confiance qu’il utilise. Lorsque cela se produit :
+
+1. L’application de la partie de confiance déconnecte l’utilisateur localement
+   d’abord, puis redirige le navigateur vers le point terminal de déconnexion
+   unique SAML du FSI avec un message SAML `LogoutRequest`.
+2. Si l’utilisateur a visité d’autres sites qui sont toujours connectés
+   directement au FSI (au lieu de l’Authenti-Canada), il propagera d’abord la
+   déconnexion de tous ces sites à l’aide de la déconnexion SAML dans le canal
+   arrière (SOAP). Cela se fait un à un, pendant que l’utilisateur attend,
+   ensuite il sera alors *complètement déconnecté de la FJGC*.
+3. Pour déconnecter l’utilisateur de l’Authenti-Canada, le FSI de la FJGC
+   redirige ensuite le navigateur vers le Cadre d’acceptation de
+   l’Authenti-Canada avec un message SAML `LogoutRequest`.
+4. Le cadre d’acceptation crée ensuite une demande de déconnexion OpenID Connect
+   et redirige le navigateur vers le point terminal de session du fournisseur
+   d’OpenID de la plateforme d’acceptation.
+5. Si des parties de confiance qui participer à la session de la plateforme
+   d’acceptation prennent en charge la déconnexion, la plateforme d’acceptation
+   envoie d’abord un jeton de déconnexion à tous, via un POST HTTP à son URI de
+   déconnexion en mode canal arrière enregistré. Cela déclenche les actions de
+   déconnexion de chacun de ces PC. S’il y a plusieurs parties de confiance, ces
+   demandes sont toutes envoyées simultanément, en parallèle.
+6. Une fois l’ouverture de session dans le canal arrière terminée, la plateforme
+   d’acceptation retourne une page de propagation de déconnexion
+   [HTML](https://html.spec.whatwg.org/multipage/). Cette page contient un
+   certain nombre d’éléments
+   [iframe](https://html.spec.whatwg.org/multipage/iframe-embed-object.html#the-iframe-element).
+   L’attribut `src` (source) de chaque élément iframe pointe vers l’URI de
+   déconnexion du canal avant de l’un des sites de la partie de confiance où
+   l’utilisateur s’est connecté pendant sa session en cours. Dans le diagramme,
+   ces autres sites sont désignés comme « autres PC de l’OIDC ». L’attribut src
+   de l’iframe final pointe vers un point terminal URI du Cadre d’acceptation de
+   la plateforme d’acceptation.
+7. Dès réception de la page de propagation, le navigateur commence à charger en
+   parallèle l’intégralité de la valeur de _iframe_s, en envoyant de manière
+   asynchrone une requête HTTP GET à l’URI src de chaque iframe.
+8. Lorsque les autres parties de confiance reçoivent ces demandes, elles
+   déconnectent l’utilisateur localement, puis retournent une réponse HTTP au
+   navigateur.
+9. La page de propagation de déconnexion comporte un gestionnaire d’événements
+   d’erreur global qui sera déclenché si un type d’erreur se produit alors que
+   tous les _iframe_s propagent la déconnexion vers divers sites de manière
+   asynchrone.
+10. Si l’une des iframes échoue ou s’interrompt, le gestionnaire onerrorevent
+    redirige le navigateur vers le Cadre d’acceptation avec une requête HTTP
+    indiquant un problème de déconnexion.
+    1. Le Cadre d’acceptation redirigera ensuite le navigateur vers le FSI avec
+      un message SAML LogoutResponse portant un code de statut urn : oasis :
+      names : tc : SAML : 2,0 : status : Responder.
+    2. La FSI redirigera ensuite le navigateur vers sa propre PC avec un message
+      LogoutResponse portant un code de statut de haut niveau
+      `urn:oasis:names:tc:SAML:2.0:status:Success` et un code de statut de
+      second niveau `urn:oasis:names:tc:SAML:2.0:status:PartialLogout`.
+    3. Cela entraînera l’affichage de la page d’erreur PC du SAML, avertissant
+      l’utilisateur qu’il n’est peut-être pas complètement déconnecté et lui
+      recommandant de fermer son navigateur.
+11. Si toutes les _iframes_ propagent correctement la déconnexion vers leur site
+    cible, le code JavaScript redirige le navigateur vers le Cadre d’acceptation
+    avec une demande HTTP indiquant une déconnexion réussie.
+    1. Le Cadre d’acceptation redirigera ensuite le navigateur vers le FSI
+       avec un message SAML `LogoutResponse` portant un code de statut
        `urn:oasis:names:tc:SAML:2.0:status:Success`.
-    2. The CSP will then in turn redirect the browser back to it's own RP with a
-       `LogoutResponse` message bearing a top level status code of
-       `urn:oasis:names:tc:SAML:2.0:status:Success` and no  second-level status
-       code.
-    3. This will cause the SAML RP to display their usual logout or landing page.
+    2. Le FJI redirigera ensuite le navigateur vers sa propre PC avec un message
+       `LogoutResponse` portant un code de statut de haut niveau
+       `urn:oasis:names:tc:SAML:2.0:status:Success` et aucun code de statut de
+       niveau supérieur.
+    3. Cela entraînera l’affichage de la page de déconnexion ou d’accueil
+       habituelle de SAML PC.
