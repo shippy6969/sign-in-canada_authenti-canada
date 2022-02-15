@@ -183,18 +183,18 @@ still logged in to the CSP. For example:
 
 Consider two users, Alice and Bob, who both have access to the same shared computer:
 
-* Alice logs into a GCCF relying party using her GCKey, but then walks away from
+1. Alice logs into a GCCF relying party using her GCKey, but then walks away from
   the computer without logging off.
-* Bob then sits down at the same computer and attempts to log in to a Sign In
+2. Bob then sits down at the same computer and attempts to log in to a Sign In
   Canada relying party, just a few seconds before Alice's 20 minute single-sign
   on window expires.
-* The Sign In Canada Platform sends the first authentication request to GCKey, and
+3. The Sign In Canada Platform sends the first authentication request to GCKey, and
   receives Alice's pairwise identifier in return.
-* Alice's SSO window then expires in the fraction of a second before the
+4. Alice's SSO window then expires in the fraction of a second before the
   Sign In Canada Platform sends the second authentication request. GCKey prompts Bob
   to enter his GCKey credentials and then returns Bob's pairwise identifier to
   the Sign In Canada Platform.
-* The Sign In Canada Platform then associates Bob's GCKey identifier with Alice's
+5. The Sign In Canada Platform then associates Bob's GCKey identifier with Alice's
   user profile.
 
 In order to safeguard against this, the Sign In Canada Platform checks the

@@ -205,18 +205,18 @@ qu’elles étaient encore connectées au FSI. À titre d’exemple :
 Prenons l’exemple de deux utilisateurs, Alice et Bob, qui ont tous deux accès au
 même ordinateur partagé :
 
-* Alice se connecte à la partie de confiance de la FJGC en utilisant sa CléGC,
+1. Alice se connecte à la partie de confiance de la FJGC en utilisant sa CléGC,
   mais s’éloigne ensuite de l’ordinateur sans se déconnecter.
-* Bob s’assoit ensuite sur le même ordinateur et tente de se connecter à la
+2. Bob s’assoit ensuite sur le même ordinateur et tente de se connecter à la
   partie de confiance Auntheti-Canada, quelques secondes seulement avant
   l’expiration de la fenêtre de 20 minutes de connexion unique d’Alice.
-* La plateforme d’acceptation envoie la première demande d’authentification à
+3. La plateforme d’acceptation envoie la première demande d’authentification à
   CléGC et reçoit en retour l’identificateur par paire d’Alice.
-* La fenêtre connexion unique d’Alice expire ensuite en quelques secondes avant
+4. La fenêtre connexion unique d’Alice expire ensuite en quelques secondes avant
   que la plateforme d’acceptation envoie la deuxième demande d’authentification.
   CléGC demande à Bob d’entrer ses informations d’identification de CléGC, puis
   retourne l’identificateur par paire de Bob à la plateforme d’acceptation.
-* La plateforme d’acceptation associe ensuite l’identificateur de la CléGC de
+5. La plateforme d’acceptation associe ensuite l’identificateur de la CléGC de
   Bob au profil d’utilisateur d’Alice.
 
 
