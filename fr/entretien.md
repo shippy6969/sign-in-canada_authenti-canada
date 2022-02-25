@@ -6,18 +6,15 @@ lang: fr
 ---
 # Maintenance planifiée à venir
 
-## Samedi 12 février 2022 21 h 00 à 21 h 15 HNE
+## Samedi 25 février 2022 09 h 00 à 09 h 30 HNE
 
 ### Environnements concernés :
 
 * Test d'acceptation client
-* Production
 
 ### La description
 
-L'équipe d'architecture d'entreprise et d'infrastructure du SCT effectuera
-maintenance corrective sur l'infrastructure de sécurité réseau utilisée par Sign In
-Canada. Pendant ce temps, le test d'acceptation client et la production
-les environnements ne seront pas accessibles.
-
-La panne devrait durer environ 10-15 minutes.
+L'équipe de Sign In Canada déploiera une nouvelle version de Sign In Canada
+plate-forme (version 1.2.70) à l'environnement de test d'acceptation client ce
+weekend. L'installation est prévue pour 9h00 samedi matin et est prévue
+entraîner une coupure d'environ 30 minutes.

@@ -6,18 +6,15 @@ lang: en
 ---
 # Upcoming Planned Maintenance
 
-## Saturday February 12, 2022 9:00PM to 9:15 PM EST
+## Saturday February 25, 2022 9:00AM to 10:00AM EST
 
-### Environments Affected:
+### Environments Affected
 
 * Client Acceptance Test
-* Production
 
 ### Description
 
-The TBS Enterprise Architecture and Infrastructure team will be performing
-corrective maintenance on the network security infrastructure used by Sign In
-Canada. During this time both the Client Acceptance Test and Production
-environments will not be accessible.
-
-The outage is expected to last approximately 10-15 minutes.
+The Sign In Canada team will be deploying a new release of the Sign In Canada
+platform (release 1.2.70) to the Client Acceptance Testing Environment this
+weekend. The installation is scheduled for 9AM Saturday morning and is expected
+to result in an outage of approximately 30 minutes.
