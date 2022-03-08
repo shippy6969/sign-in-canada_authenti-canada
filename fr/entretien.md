@@ -6,7 +6,7 @@ lang: fr
 ---
 # Maintenance planifiée à venir
 
-## Mardi 8 mars 2022 21 h 00 à 9 h 30 HNE
+## Mardi 8 mars 2022 21 h 00 à 9 h 10 HNE
 
 ### Environnements concernés :
 
@@ -14,10 +14,9 @@ lang: fr
 
 ### La description
 
-L'équipe de Sign In Canada déploiera une nouvelle version de Sign In Canada
-plate-forme (version 1.2.71) à l'environnement de test d'acceptation client ce
-weekend. l'installation est prévue pour 21h00 et devrait entraîner une panne de
-environ 30 minutes.
+L'équipe de Sign In Canada appliquera des correctifs de sécurité au client
+Environnement de test d'acceptation. L'installation est prévue pour 21h00 et est
+devrait entraîner une panne d'environ 6 à 10 minutes.
 
 ## Dimanche 13 mars 2022 de 4 h 00 à 4 h 35 HNE
 
