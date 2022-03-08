@@ -6,7 +6,7 @@ lang: en
 ---
 # Upcoming Planned Maintenance
 
-## Saturday February 25, 2022 9:00AM to 10:00AM EST
+## Tuesday March 8, 2022 9:00PM to 9:30AM EST
 
 ### Environments Affected
 
@@ -15,6 +15,19 @@ lang: en
 ### Description
 
 The Sign In Canada team will be deploying a new release of the Sign In Canada
-platform (release 1.2.70) to the Client Acceptance Testing Environment this
-weekend. The installation is scheduled for 9AM Saturday morning and is expected
-to result in an outage of approximately 30 minutes.
+platform (release 1.2.71) to the Client Acceptance Testing Environment.The
+installation is scheduled for 9PM and is expected to result in an outage of
+approximately 30 minutes.
+
+## Sunday March 13, 2022 4:00AM to 4:35AM EST
+
+### Environments Affected
+
+* Production
+
+### Description
+
+The Sign In Canada team will be deploying a new release of the Sign In Canada
+platform (release 1.2.71) to the production environment.The
+installation is scheduled for 4AM and is expected to result in an outage of
+approximately 35 minutes.
