@@ -5,19 +5,6 @@ title: Maintenance planifiée à venir
 lang: fr
 ---
 # Maintenance planifiée à venir
-
-## Mardi 8 mars 2022 21 h 00 à 9 h 10 HNE
-
-### Environnements concernés :
-
-* Test d'acceptation client
-
-### La description
-
-L'équipe de Sign In Canada appliquera des correctifs de sécurité au client
-Environnement de test d'acceptation. L'installation est prévue pour 21h00 et est
-devrait entraîner une panne d'environ 6 à 10 minutes.
-
 ## Dimanche 13 mars 2022 de 4 h 00 à 4 h 35 HNE
 
 ### Environnements concernés :
@@ -27,6 +14,6 @@ devrait entraîner une panne d'environ 6 à 10 minutes.
 ### La description
 
 L'équipe de Sign In Canada déploiera une nouvelle version de Sign In Canada
-plate-forme (version 1.2.71) à l'environnement de production. le l'installation
+plate-forme ([version 1.2.75](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.75)) à l'environnement de production. le l'installation
 est prévue pour 4 heures du matin et devrait entraîner une panne de environ 35
 minutes.
