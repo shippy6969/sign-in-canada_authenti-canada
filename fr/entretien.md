@@ -19,7 +19,7 @@ L'équipe de Authenti-Canada déploiera une nouvelle version de Authenti-Canada
 à l'environnement de test d'acceptation du client. L'installation est prévue
 pour 21h00 et devrait entraîner une panne d'environ 35 minutes.
 
-## Dimanche 10 avril 2022 de 4 h 00 à 16 h 45 HAE
+## Dimanche 10 avril 2022 de 4 h 00 à 04 h 45 HAE
 
 ### Environnements concernés :
 
