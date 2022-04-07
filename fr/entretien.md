@@ -14,7 +14,7 @@ lang: fr
 ### La description
 
 L'équipe de Authenti-Canada déploiera une nouvelle version de Authenti-Canada
-plate-forme ([version
+ ([version
 1.2.93](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.93))
 à l'environnement de test d'acceptation du client. L'installation est prévue
 pour 21h00 et devrait entraîner une panne d'environ 35 minutes.
