@@ -6,7 +6,19 @@ lang: en
 ---
 # Upcoming Planned Maintenance
 
-## Sunday April 10, 2022 4:00AM to 4:45AM EDT
+## Wednesday May 11, 2022 9:00PM EDT
+
+### Environments Affected
+
+* Client Acceptance Test
+
+### Description
+
+The Sign In Canada team will be deploying a new release of the Sign In Canada platform
+[Release 1.2.95](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.95)
+to the to the client acceptance test environment. The installation is not expected to result in any outage.
+
+## Sunday May 15, 2022 4:00AM EDT
 
 ### Environments Affected
 
@@ -14,7 +26,8 @@ lang: en
 
 ### Description
 
-The Sign In Canada team will be promoting [Release
-1.2.93](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.93)
-to the production environment.The installation is scheduled for 4AM
-and is expected to result in an outage of approximately 45 minutes.
+The Sign In Canada team will be promoting
+[Release 1.2.95](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.95)
+to the to the production environment. The installation is not expected to result in any outage.
+
+
