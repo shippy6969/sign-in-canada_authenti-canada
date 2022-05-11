@@ -26,6 +26,6 @@ L'équipe de Authenti-Canada déploiera une nouvelle version de Authenti-Canada 
 ###  La description
 
 L'équipe du signe du Canada fera la promotion de
-[Release 1.2.95](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.95)
+[Version 1.2.95](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.95)
 à l'environnement de production. L'installation ne devrait pas entraîner une panne.
 
