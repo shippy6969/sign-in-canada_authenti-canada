@@ -1,10 +1,12 @@
 ---
 layout: default
 ref: maintenance
-title: Maintenance planifiée à venir
+title: Entretien prévu à venir
 lang: fr
 ---
-## Mercredi 11 mai 2022 21:00 HAE
+# Entretien prévu à venir
+
+## Vendredi 27 mai 2022 7h00 HAE
 
 ### Environnements concernés :
 
@@ -12,20 +14,16 @@ lang: fr
 
 ### La description
 
-L'équipe de Authenti-Canada déploiera une nouvelle version de Authenti-Canada ([Version
-1.2.95](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.95))
-à l'environnement de production. L'installation ne devrait pas entraîner une panne.
+L'équipe de Authenti-Canada sera de mise à jour les clés cryptographiques
+utilisées pour s'authentifier aux environnements de test GCKEY et CBS entre 7 h
+et 8 h, heure de l'Est le vendredi 27 mai.
 
-# Dimanche 15 mai 2022 à 4 h 00 HAE
+Afin de maintenir l'intégration entre le Authenti-Canada Acceptation du client
+Environnement de test (CATE) et les deux services d'identification SSC, 2 Keys et SecureKey
+aura besoin de configurer ces nouvelles clés simultanément.Celles-ci
+Les changements sont étroitement coordonnés entre TBS, SSC et les deux fournisseurs afin
+Pour minimiser les temps d'arrêt, mais les clients peuvent rencontrer brièvement des erreurs
+un changement est en cours.
 
-### Environnements concernés :
-
-
-* Production
-
-###  La description
-
-L'équipe du signe du Canada fera la promotion de
-[Version 1.2.95](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.95)
-à l'environnement de production. L'installation ne devrait pas entraîner une panne.
-
+La portée de ce changement est limitée au L'environnement de test d'acceptation client.
+L'environnement de production ne sera pas affecté.
