@@ -38,7 +38,7 @@ Environment (CATE). The production environment will not be impacted.
 
 The Sign In Canada team will be deploying a new release of the Sign In Canada platform
 [Release 1.2.98](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.98)
-to the to the client acceptance test environment. The installation is scheduled for 9PM
+to the client acceptance test environment. The installation is scheduled for 9PM
 and is expected to result in an outage of approximately 35 minutes.
 
 ## Sunday May 29, 2022 4:00AM EDT
