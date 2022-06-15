@@ -6,26 +6,14 @@ lang: fr
 ---
 # Entretien prévu à venir
 
-## Vendredi 27 mai 2022 21h00 HAE
+## Mercredi 15 juin 2022 19:00 PME
 
 ### Environnements concernés :
 
-* Test d'acceptation client
+* Test d'acceptation client, Production
 
 ### La description
 
-L'équipe d'Authenti-Canada déploiera une nouvelle version de la plate-forme du Authenti-Canada
-[Version 1.2.98](https://github.com/sign-in-canada/Acceptance-Platform/releases/tag/v1.2.98)
-à l'environnement de test d'acceptation du client.L'installation est prévue pour 21h
-et devrait entraîner une panne d'environ 35 minutes.
-
-## Dimanche 29 mai 2022 à 4 h 00 HAE
-
-### Environnements concernés :
-
-* Production
-
-### La description
-
-Les derniers correctifs de sécurité Linux seront appliqués à l'environnement de production
-À partir de 4h du matin.Cela entraînera une panne d'environ 12 minutes.
+L'équipe d'architecture enterprise et d'infrastructure de SCT se produira
+entretien préventif d'urgence sur un pare-feu.Cela devrait provoquer un
+Brève sortie de 5 à 10 minutes.
