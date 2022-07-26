@@ -6,6 +6,18 @@ lang: fr
 ---
 # Entretien prévu à venir
 
+## Mardi 26 juin 2022 19:00 PME
+
+### Environnements concernés :
+
+* Test d'acceptation client, Production
+
+### Description
+
+L'équipe d'architecture enterprise et d'infrastructure de SCT se produira
+entretien préventif d'urgence sur un pare-feu.Cela devrait provoquer un
+Brève sortie de 15 minutes.
+
 ## Dimanche 31 juillet 2022 4h00 HAE
 
 ### Environnements concernés
