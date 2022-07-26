@@ -6,7 +6,7 @@ lang: fr
 ---
 # Entretien prévu à venir
 
-## Mardi 26 juin 2022 19:00 PME
+## Mardi 26 juillet 2022 19:00 PME
 
 ### Environnements concernés :
 
