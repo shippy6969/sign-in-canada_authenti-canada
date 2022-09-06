@@ -64,7 +64,7 @@ Connect](https://openid.net/connect/) Provider, it also provides the application
 programming interface used by GC relying parties that integrate using [OpenID
 Connect](https://openid.net/connect/).
 
-Version: 4.2.3
+Version: 4.4.0
 
 Website: https://www.gluu.org/
 
@@ -78,7 +78,7 @@ Shibboleth is a [SAML](https://wiki.oasis-open.org/security/FrontPage) Identity
 Provider (IDP) that provides the application programming interface used by GC
 relying parties that integrate using [SAML](https://wiki.oasis-open.org/security/FrontPage).
 
-Version: 4.0.1
+Version: 4.4.0
 
 Website: https://www.shibboleth.net/products/identity-provider/
 
@@ -96,6 +96,6 @@ The Sign In Canada platform uses Couchbase to store user profiles and relying
 party configurations, as well as for high-performance distributed session
 caching.
 
-Version: 6.6.1
+Version: 6.6.5
 
 Website: https://www.couchbase.com/
